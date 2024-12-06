@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-Frame Virtual Joystick</title>
+    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+    <style>
+        /* Styling untuk analog */
+        .joystick-container {
+            position: fixed;
+            bottom: 20px;
+            z-index: 10;
+        }
+        .joystick {
+            width: 100px;
+            height: 100px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            position: relative;
+        }
+        .joystick-handle {
+            width: 40px;
+            height: 40px;
+            background: #007BFF;
+            border-radius: 50%;
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            pointer-events: none;
+        }
+        .joystick-container.left {
+            left: 20px;
+        }
+        .joystick-container.right {
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- A-Frame Scene -->
+    <a-scene>
+        <!-- Kamera dengan kontrol -->
+        <a-entity id="cameraRig" position="0 1.6 0">
+            <a-camera>
+                <a-cursor></a-cursor>
+            </a-camera>
+        </a-entity>
+        
+        <!-- Lantai -->
+        <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#7BC8A4"></a-plane>
+
+        <!-- Objek 3D -->
+        <a-box position="2 1 -5" color="#4CC3D9"></a-box>
+        <a-sphere position="0 1 -3" radius="1.25" color="#EF2D5E"></a-sphere>
+        <a-cylinder position="-2 0.5 -5" radius="0.5" height="1" color="#FFC65D"></a-cylinder>
+
+        <!-- Langit -->
+        <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+
+    <!-- Analog Virtual untuk Belok -->
+    <div class="joystick-container left">
+        <div class="joystick" id="joystick-left">
+            <div class="joystick-handle"></div>
+        </div>
+    </div>
+
+    <!-- Analog Virtual untuk Maju/Mundur -->
+    <div class="joystick-container right">
+        <div class="joystick" id="joystick-right">
+            <div class="joystick-handle"></div>
+        </div>
+    </div>
+
+    <!-- Skrip JavaScript -->
+    <script>
+        // Pilih entitas kamera
+        const cameraRig = document.querySelector('#cameraRig');
+
+        // Variabel untuk posisi joystick
+        let joystickLeft = { active: false, x: 0, y: 0 };
+        let joystickRight = { active: false, x: 0, y: 0 };
+
+        // Fungsi untuk menangani pergerakan joystick
+        function handleJoystick(joystick, deltaX, deltaY) {
+            const MAX_DISTANCE = 50; // Jarak maksimum joystick
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const ratio = distance > MAX_DISTANCE ? MAX_DISTANCE / distance : 1;
+
+            joystick.x = deltaX * ratio;
+            joystick.y = deltaY * ratio;
+
+            const handle = joystick.element.querySelector('.joystick-handle');
+            handle.style.transform = `translate(${joystick.x}px, ${joystick.y}px)`;
+        }
+
+        // Tambahkan event listener untuk joystick kiri (belok)
+        const leftJoystick = document.getElementById('joystick-left');
+        leftJoystick.addEventListener('mousedown', (e) => {
+            joystickLeft.active = true;
+            joystickLeft.element = leftJoystick;
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (joystickLeft.active) {
+                const rect = leftJoystick.getBoundingClientRect();
+                const deltaX = e.clientX - (rect.left + rect.width / 2);
+                const deltaY = e.clientY - (rect.top + rect.height / 2);
+                handleJoystick(joystickLeft, deltaX, deltaY);
+            }
+        });
+        document.addEventListener('mouseup', () => {
+            joystickLeft.active = false;
+            joystickLeft.x = joystickLeft.y = 0;
+            const handle = leftJoystick.querySelector('.joystick-handle');
+            handle.style.transform = 'translate(0px, 0px)';
+        });
+
+        // Tambahkan event listener untuk joystick kanan (maju/mundur)
+        const rightJoystick = document.getElementById('joystick-right');
+        rightJoystick.addEventListener('mousedown', (e) => {
+            joystickRight.active = true;
+            joystickRight.element = rightJoystick;
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (joystickRight.active) {
+                const rect = rightJoystick.getBoundingClientRect();
+                const deltaX = e.clientX - (rect.left + rect.width / 2);
+                const deltaY = e.clientY - (rect.top + rect.height / 2);
+                handleJoystick(joystickRight, deltaX, deltaY);
+            }
+        });
+        document.addEventListener('mouseup', () => {
+            joystickRight.active = false;
+            joystickRight.x = joystickRight.y = 0;
+            const handle = rightJoystick.querySelector('.joystick-handle');
+            handle.style.transform = 'translate(0px, 0px)';
+        });
+
+        // Fungsi update pergerakan kamera
+        function updateCameraMovement() {
+            if (joystickLeft.x || joystickLeft.y) {
+                const rotation = cameraRig.getAttribute('rotation');
+                rotation.y += joystickLeft.x * 0.1; // Sensitivitas belok
+                cameraRig.setAttribute('rotation', rotation);
+            }
+
+            if (joystickRight.y) {
+                const position = cameraRig.getAttribute('position');
+                position.z -= joystickRight.y * 0.01; // Sensitivitas maju/mundur
+                cameraRig.setAttribute('position', position);
+            }
+
+            requestAnimationFrame(updateCameraMovement);
+        }
+
+        updateCameraMovement();
+    </script>
+</body>
+</html>
