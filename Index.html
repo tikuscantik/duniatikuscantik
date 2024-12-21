@@ -1,139 +1,177 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <!-- Link to Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    .container {
-      height: 100vh;
-      width: 100vw;
-      font-family: Helvetica;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .loader {
-      height: 20px;
-      width: 250px;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
-    }
-
-    .loader--dot {
-      animation-name: loader;
-      animation-timing-function: ease-in-out;
-      animation-duration: 3s;
-      animation-iteration-count: infinite;
-      height: 20px;
-      width: 20px;
-      border-radius: 100%;
-      background-color: black;
-      position: absolute;
-      border: 2px solid white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .section-title {
       text-align: center;
-      font-size: 16px;
-    }
-
-    .loader--dot:first-child {
-      background-color: #8cc759;
-      animation-delay: 0.5s;
-    }
-
-    .loader--dot:nth-child(2) {
-      background-color: #8c6daf;
-      animation-delay: 0.4s;
-    }
-
-    .loader--dot:nth-child(3) {
-      background-color: #ef5d74;
-      animation-delay: 0.3s;
-    }
-
-    .loader--dot:nth-child(4) {
-      background-color: #f9a74b;
-      animation-delay: 0.2s;
-    }
-
-    .loader--dot:nth-child(5) {
-      background-color: #60beeb;
-      animation-delay: 0.1s;
-    }
-
-    .loader--dot:nth-child(6) {
-      background-color: #fbef5a;
-      animation-delay: 0s;
-    }
-
-    .loader--text {
-      position: absolute;
-      top: 50%; /* Menyentuh tengah vertikal */
-      left: 50%; /* Menyentuh tengah horizontal */
-      transform: translate(-50%, -50%); /* Pusatkan elemen */
-    }
-
-    .loader--text:after {
-      content: "Fanz Online";
+      margin-bottom: 30px;
       font-weight: bold;
-      animation-name: loading-text;
-      animation-duration: 3s;
-      animation-iteration-count: infinite;
     }
-
-    @keyframes loader {
-      15% {
-        transform: translateX(0);
-      }
-      45% {
-        transform: translateX(230px);
-      }
-      65% {
-        transform: translateX(230px);
-      }
-      95% {
-        transform: translateX(0);
-      }
+    .project-card {
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-
-    @keyframes loading-text {
-      0% {
-        content: "Fanz Online";
-      }
-      25% {
-        content: "-Fanz Online-";
-      }
-      50% {
-        content: "- -Fanz Online- -";
-      }
-      
+    .project-card img {
+      max-height: 200px;
+      object-fit: cover;
+    }
+    .social-icons i {
+      font-size: 24px;
+      margin: 0 10px;
+      color: #333;
+    }
+    .social-icons i:hover {
+      color: #007bff;
     }
   </style>
 </head>
+
 <body>
-  <div class='container'>
-    <div class='loader'>
-      <div class='loader--dot'>N</div>
-      <div class='loader--dot'>A</div>
-      <div class='loader--dot'>F</div>
-      <div class='loader--dot'>L</div>
-      <div class='loader--dot'>A</div>
-      <div class='loader--dot'>•</div>
-      <div class='loader--text'></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">My Portfolio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#about">About Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-  <script>
-    // Menunggu 2 detik untuk simulasi loading
-    setTimeout(function() {
-      window.location.href = 'index.html'; // Pindah ke halaman utama.php
-    }, 4000);
-  </script>
+  </nav>
+
+  <!-- About Me Section -->
+  <section id="about" class="py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h2 class="section-title">About Me</h2>
+          <p>Hello! I'm a passionate web developer with a keen interest in creating dynamic, user-friendly websites and applications. I specialize in front-end development, but I also have experience with back-end technologies. My goal is to deliver high-quality projects that meet the needs of my clients and users.</p>
+        </div>
+        <div class="col-md-6">
+          <img src="https://via.placeholder.com/300" alt="Profile Picture" class="img-fluid rounded-circle">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-5">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Front-End Development</h4>
+          <ul>
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JavaScript</li>
+            <li>React</li>
+            <li>Bootstrap</li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h4>Back-End Development</h4>
+          <ul>
+            <li>Node.js</li>
+            <li>Express</li>
+            <li>MongoDB</li>
+            <li>SQL</li>
+            <li>Python</li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Git</li>
+            <li>GitHub</li>
+            <li>Visual Studio Code</li>
+            <li>Docker</li>
+            <li>AWS</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <div class="row">
+        <!-- Project 1 -->
+        <div class="col-md-4">
+          <div class="card project-card">
+            <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Project 1">
+            <div class="card-body">
+              <h5 class="card-title">Project One</h5>
+              <p class="card-text">A web application built using React and Node.js to manage tasks effectively.</p>
+              <a href="#" class="btn btn-primary">View Project</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="col-md-4">
+          <div class="card project-card">
+            <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Project 2">
+            <div class="card-body">
+              <h5 class="card-title">Project Two</h5>
+              <p class="card-text">An e-commerce website developed with JavaScript, Bootstrap, and MongoDB.</p>
+              <a href="#" class="btn btn-primary">View Project</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="col-md-4">
+          <div class="card project-card">
+            <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Project 3">
+            <div class="card-body">
+              <h5 class="card-title">Project Three</h5>
+              <p class="card-text">A portfolio website built using HTML, CSS, and JavaScript to showcase my work.</p>
+              <a href="#" class="btn btn-primary">View Project</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-5">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <p>If you would like to get in touch, feel free to contact me via social media or email.</p>
+      <div class="social-icons text-center">
+        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  
+  <!-- FontAwesome for social icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 </body>
+
 </html>
